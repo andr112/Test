@@ -43,35 +43,40 @@ class ListViewCustomScrollViewDemo extends StatelessWidget {
       slivers: <Widget>[
         new SliverPadding(
           padding: const EdgeInsets.all(20.0),
-          sliver: new SliverList(
-            delegate: new SliverChildListDelegate(
-              <Widget>[
-                buildContents('item1'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item2'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item3'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item4'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item4'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item5'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item6'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item7'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item8'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item9'),
-                new Divider(height: 1.0, color: Colors.grey),
-                buildContents('item10'),
-              ],
+          sliver:  new SliverGrid(
+            //Grid
+            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, //Grid按两列显示
+              mainAxisSpacing: 10.0,
+              crossAxisSpacing: 10.0,
+              childAspectRatio: 4.0,
+            ),
+            delegate: new SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                //创建子widget
+                return new Container(
+                  alignment: Alignment.center,
+                  color: Colors.cyan[100 * (index % 9)],
+                  child: new Text('grid item $index'),
+                );
+              },
+              childCount: 40,
             ),
           ),
         ),
-      ],
+        new SliverFixedExtentList(
+          itemExtent: 50.0,
+          delegate: new SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                //创建列表项
+                return new Container(
+                  alignment: Alignment.center,
+                  color: Colors.lightBlue[100 * (index % 9)],
+                  child: new Text('list item $index'),
+                );
+              }, childCount: 50 //50个列表项
+          ),
+        ),],
     );
   }
 }

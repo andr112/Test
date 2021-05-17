@@ -21,14 +21,13 @@ class StackDemo extends StatelessWidget {
       body: new Center(
         child: new Stack(
           children: <Widget>[
-            new Image.network(
-              'http://pic.baike.soso.com/p/20130828/20130828161137-1346445960.jpg',
+            new Image.asset(
+              'images/img.jpg',
               scale: 2.0,
             ),
             new Positioned(
-              left: 10.0,
-              right: 10.0,
-              top: 10.0,
+              left: 20.0,
+              top: 50.0,
               child: new Text(
                 '这是上层的布局',
                 style: new TextStyle(

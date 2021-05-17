@@ -32,7 +32,7 @@ class HeroAnimation extends StatelessWidget {
                   ),
                   body: new Container(
                     // Set background to blue to emphasize that it's a new route.
-                    color: Colors.lightBlue,
+                    color: Colors.green[200],
                     padding: const EdgeInsets.all(16.0),
                     alignment: Alignment.center,
                     child: new PhotoHero(

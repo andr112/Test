@@ -27,6 +27,18 @@ class _PermissionsDemo2State extends State<PermissionsDemo2> {
       appBar: new AppBar(
         title: new Text('PermissionsDemo'),
       ),
+      body:  Container(
+       color: Colors.black,
+       child: Transform(
+        alignment: Alignment.topRight,
+         transform: Matrix4.skewY(0.1)..rotateZ(-3.1415968 / 12.0),
+        child: Container(
+         padding: const EdgeInsets.all(8.0),
+          color: const Color(0xFFE8581C),
+          child: const Text('Apartment for rent!'),
+       ),
+       ),
+    ),
     );
   }
 }

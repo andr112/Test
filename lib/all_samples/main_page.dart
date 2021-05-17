@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/all_samples/router/router_easy_sample/router_demo.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'animation/animated_widgets.dart';
+import 'animation/animated_switcher.dart';
+import 'animation/animation_scale.dart';
+import 'animation/animation_widget.dart';
 import 'list/list_demo.dart';
 import 'normal_page.dart';
 
@@ -9,9 +13,12 @@ void main() {
   runApp(new MaterialApp(
     // 路由管理，指定发送到哪个页面
     routes: <String, WidgetBuilder>{
-      '/my_normal_page': (BuildContext context) => new MyHomePage(),
-      '/routers': (BuildContext context) => new RouterDemo(),
-      '/listview_samples': (BuildContext context) => new ListViewDemos(),
+      '/my_normal_page': (BuildContext context) => MyHomePage(),
+      '/routers': (BuildContext context) => RouterDemo(),
+      '/listview_samples': (BuildContext context) => ListViewDemos(),
+      '/animation_scale': (BuildContext context) => ScaleAnimationRoute(),
+      '/animation_widget': (BuildContext context) => AnimatedWidgetsTest(),
+      //new ScaleAnimationRoute1(),
     },
     title: 'Flutter控件用法示例大全',
     theme: new ThemeData(
@@ -29,6 +36,17 @@ class MainActivity extends StatelessWidget {
       buildClicks(buildContents('路由用法Demo'), context, '/routers'),
       buildClicks(
           buildContents('ListView用法Demo'), context, '/listview_samples'),
+      buildClicks(buildContents('缩放动画用法Demo'), context, '/animation_scale'),
+      buildClicks(buildContents('动画组件用法Demo'), context, '/animation_widget'),
+      buildClicks2(
+          buildContents('通用“动画切换”组件页面'),
+          context,
+          Scaffold(
+            appBar: new AppBar(
+              title: new Text('Animated Switcher'),
+            ),
+            body: AnimatedSwitcherCounterRoute(),
+          )),
 //      buildClicks2(buildContents('默认页面'), context, new NormalPage()),
 //      buildClicks2(buildContents('路由用法Demo'), context, new RouterDemo()),
     ];
@@ -45,65 +63,47 @@ class MainActivity extends StatelessWidget {
     return new InkWell(
       child: child,
       onTapDown: (details) {
-        print('onTapDown');
-        Fluttertoast.showToast(
-            msg: 'onTapDown',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onTapDown');
         // 发送路由消息
         Navigator.pushNamed(context, '$routeStr');
       },
       onTap: () {
-        Fluttertoast.showToast(
-            msg: 'onTap',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onTap');
       },
       onLongPress: () {
-        Fluttertoast.showToast(
-            msg: 'onLongPress',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onLongPress');
       },
       onDoubleTap: () {
-        Fluttertoast.showToast(
-            msg: 'onDoubleTap',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onDoubleTap');
       },
     );
+  }
+
+  void showToastBottom(String text) {
+    print(text);
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
   }
 
   Widget buildClicks2(Widget child, BuildContext context, Widget page) {
     return new InkWell(
       child: child,
       onTapDown: (details) {
-        print('onTapDown');
-        Fluttertoast.showToast(
-            msg: 'onTapDown',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onTapDown');
         // 发送路由消息
         Navigator.push(context,
             new MaterialPageRoute(builder: (BuildContext context) => page));
       },
       onTap: () {
-        Fluttertoast.showToast(
-            msg: 'onTap',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onTap');
       },
       onLongPress: () {
-        Fluttertoast.showToast(
-            msg: 'onLongPress',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onLongPress');
       },
       onDoubleTap: () {
-        Fluttertoast.showToast(
-            msg: 'onDoubleTap',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
+        showToastBottom('onDoubleTap');
       },
     );
   }
