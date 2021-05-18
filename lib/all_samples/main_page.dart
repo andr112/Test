@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/all_samples/paint/custom_paint.dart';
 import 'package:flutter_demo/all_samples/router/router_easy_sample/router_demo.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'animation/animated_widgets.dart';
 import 'animation/animated_switcher.dart';
 import 'animation/animation_scale.dart';
+import 'animation/animation_turnbox.dart';
 import 'animation/animation_widget.dart';
 import 'list/list_demo.dart';
 import 'normal_page.dart';
@@ -17,14 +19,14 @@ void main() {
       '/routers': (BuildContext context) => RouterDemo(),
       '/listview_samples': (BuildContext context) => ListViewDemos(),
       '/animation_scale': (BuildContext context) => ScaleAnimationRoute(),
-      '/animation_widget': (BuildContext context) => AnimatedWidgetsTest(),
-      //new ScaleAnimationRoute1(),
+      '/AnimatedWidgets': (BuildContext context) => AnimatedWidgetsTest(),
+      '/animation_widget': (BuildContext context) => ScaleAnimationRoute1(),
     },
     title: 'Flutter控件用法示例大全',
-    theme: new ThemeData(
+    theme: ThemeData(
       primarySwatch: Colors.teal,
     ),
-    home: new MainActivity(),
+    home: MainActivity(),
   ));
 }
 
@@ -32,34 +34,30 @@ class MainActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgets = <Widget>[
-      buildClicks(buildContents('默认页面'), context, '/my_normal_page'),
-      buildClicks(buildContents('路由用法Demo'), context, '/routers'),
+      buildClicks(context, buildContents('默认页面'), '/my_normal_page'),
+      buildClicks(context, buildContents('路由用法Demo'), '/routers'),
       buildClicks(
-          buildContents('ListView用法Demo'), context, '/listview_samples'),
-      buildClicks(buildContents('缩放动画用法Demo'), context, '/animation_scale'),
-      buildClicks(buildContents('动画组件用法Demo'), context, '/animation_widget'),
-      buildClicks2(
-          buildContents('通用“动画切换”组件页面'),
-          context,
-          Scaffold(
-            appBar: new AppBar(
-              title: new Text('Animated Switcher'),
-            ),
-            body: AnimatedSwitcherCounterRoute(),
-          )),
-//      buildClicks2(buildContents('默认页面'), context, new NormalPage()),
-//      buildClicks2(buildContents('路由用法Demo'), context, new RouterDemo()),
+          context, buildContents('ListView用法Demo'), '/listview_samples'),
+      buildClicks(context, buildContents('缩放动画用法Demo'), '/animation_scale'),
+      buildClicks(context, buildContents('动画组件用法Demo'), '/animation_widget'),
+      buildClicks2(context, '通用“动画切换”组件页面', AnimatedSwitcherCounterRoute()),
+      buildClicks2(context, '自定义组件_旋转', TurnBoxRoute()),
+      buildClicks2(context, '自绘棋盘', CustomPaintRoute()),
     ];
 
-    return new Scaffold(
+    return page('Flutter控件用法示例大全',  SingleChildScrollView(child: new Column(children: widgets)),);
+  }
+
+  Widget page(String title, Widget body) {
+    return Scaffold(
       appBar: new AppBar(
-        title: new Text('Flutter控件用法示例大全'),
+        title: new Text(title),
       ),
-      body: new Column(children: widgets),
+      body: body,
     );
   }
 
-  Widget buildClicks(Widget child, BuildContext context, String routeStr) {
+  Widget buildClicks(BuildContext context, Widget child, String routeStr) {
     return new InkWell(
       child: child,
       onTapDown: (details) {
@@ -87,14 +85,17 @@ class MainActivity extends StatelessWidget {
         gravity: ToastGravity.BOTTOM);
   }
 
-  Widget buildClicks2(Widget child, BuildContext context, Widget page) {
+  Widget buildClicks2(BuildContext context, String text, Widget body) {
+    Widget child = buildContents(text);
     return new InkWell(
       child: child,
       onTapDown: (details) {
         showToastBottom('onTapDown');
         // 发送路由消息
-        Navigator.push(context,
-            new MaterialPageRoute(builder: (BuildContext context) => page));
+        Navigator.push(
+            context,
+            new MaterialPageRoute(
+                builder: (BuildContext context) => page(text, body)));
       },
       onTap: () {
         showToastBottom('onTap');
